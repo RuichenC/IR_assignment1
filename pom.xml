@@ -64,7 +64,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>lucene.main</mainClass>
+                                    <mainClass>lucene.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
