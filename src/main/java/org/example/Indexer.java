@@ -23,7 +23,7 @@ public class Indexer {
         String indexPath = "src/index";
         Date start = new Date();
         try {
-            System.out.println("Indexing to directory '" + indexPath + "'...");
+            System.out.println("Index will be saved to " + indexPath );
 
             Directory dir = FSDirectory.open(Paths.get(indexPath));
             Analyzer analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
@@ -42,8 +42,10 @@ public class Indexer {
             }
             writer.close();
 
+//            set a timer
             Date end = new Date();
-            System.out.println(end.getTime() - start.getTime() + " total milliseconds");
+            float time = end.getTime() - start.getTime();
+            System.out.println("run time: " + time + "ms");
 
         } catch (IOException e) {
             System.out.println(" caught a " + e.getClass() +

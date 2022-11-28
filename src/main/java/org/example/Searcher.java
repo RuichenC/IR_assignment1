@@ -47,9 +47,11 @@ public class Searcher {
 
             TopDocs topDocs = searcher.search(query, 1000);
             ScoreDoc[] hits = topDocs.scoreDocs;
+//            formatted results file: query-id Q0 document-id rank score STANDARD
             for(ScoreDoc sd:hits)
             {
                 Document docc = searcher.doc(sd.doc);
+//                the doc id
                 int s = Integer.parseInt(docc.get("Id"));
                 writer.println((q.getKey()) + " Q0 " + s + " 0 " + sd.score + " EXP");
 //	        	System.out.println((q.getKey()) + " Q0 " + s + " 0 " + sd.score + " EXP");

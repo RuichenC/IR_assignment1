@@ -5,17 +5,19 @@ import java.util.HashMap;
 import java.io.FileReader;
 
 public class Parser {
+//    get documents parsed
     public static HashMap<Integer, HashMap<String, String>> parse_docs() throws Exception{
+        String line;
+        String property = null;
         BufferedReader br = new BufferedReader(new FileReader("src/cranfield/cran.all.1400"));
-        String line=null, property=null;
         int count=0;
-        HashMap<Integer, HashMap<String, String>> processed_docs = new HashMap<Integer, HashMap<String, String>>();
+        HashMap<Integer, HashMap<String, String>> docs = new HashMap<Integer, HashMap<String, String>>();
         while((line = br.readLine())!=null) {
             String append_line;
             if(line.startsWith(".I")) {
                 count++;
                 property=".I";
-                processed_docs.put(count, new HashMap<String, String>());
+                docs.put(count, new HashMap<String, String>());
             }
             else if(line.startsWith(".A"))
                 property=".A";
@@ -27,48 +29,50 @@ public class Parser {
                 property=".W";
             else {
                 if(property==".A") {
-                    if(processed_docs.get(count).get("Author")!=null) {
-                        append_line = processed_docs.get(count).get("Author");
-                        processed_docs.get(count).put("Author", append_line+" "+line);
+                    if(docs.get(count).get("Author")!=null) {
+                        append_line = docs.get(count).get("Author");
+                        docs.get(count).put("Author", append_line+" "+line);
                     }
                     else
-                        processed_docs.get(count).put("Author", line);
+                        docs.get(count).put("Author", line);
                 }
                 else if(property==".T") {
-                    if(processed_docs.get(count).get("Title")!=null) {
-                        append_line = processed_docs.get(count).get("Title");
-                        processed_docs.get(count).put("Title", append_line+" "+line);
+                    if(docs.get(count).get("Title")!=null) {
+                        append_line = docs.get(count).get("Title");
+                        docs.get(count).put("Title", append_line+" "+line);
                     }
                     else
-                        processed_docs.get(count).put("Title", line);
+                        docs.get(count).put("Title", line);
                 }
                 else if(property==".B") {
-                    if(processed_docs.get(count).get("Bibliography")!=null) {
-                        append_line = processed_docs.get(count).get("Bibliography");
-                        processed_docs.get(count).put("Bibliography", append_line+" "+line);
+                    if(docs.get(count).get("Bibliography")!=null) {
+                        append_line = docs.get(count).get("Bibliography");
+                        docs.get(count).put("Bibliography", append_line+" "+line);
                     }
                     else
-                        processed_docs.get(count).put("Bibliography", line);
+                        docs.get(count).put("Bibliography", line);
                 }
                 else if(property==".W") {
-                    if(processed_docs.get(count).get("Text")!=null) {
-                        append_line = processed_docs.get(count).get("Text");
-                        processed_docs.get(count).put("Text", append_line+" "+line);
+                    if(docs.get(count).get("Text")!=null) {
+                        append_line = docs.get(count).get("Text");
+                        docs.get(count).put("Text", append_line+" "+line);
                     }
                     else
-                        processed_docs.get(count).put("Text", line);
+                        docs.get(count).put("Text", line);
                 }
             }
         }
 
         br.close();
-        return processed_docs;
+        System.out.println("Documents parsed");
+        return docs;
     }
+//    get queries parsed
     public static HashMap<Integer, String> parse_qrys() throws Exception{
         BufferedReader br = new BufferedReader(new FileReader("src/cranfield/cran.qry"));
         String line=null, property=null;
         int count=0;
-        HashMap<Integer, String> processed_qry = new HashMap<Integer, String>();
+        HashMap<Integer, String> qrys = new HashMap<Integer, String>();
         while((line = br.readLine())!=null) {
             String append_line=null;
             if(line.startsWith(".I")) {
@@ -79,18 +83,18 @@ public class Parser {
                 property=".W";
             else {
                 if(property==".W") {
-                    if(processed_qry.get(count)!=null) {
-                        append_line = processed_qry.get(count);
-                        processed_qry.put(count, append_line+" "+line);
+                    if(qrys.get(count)!=null) {
+                        append_line = qrys.get(count);
+                        qrys.put(count, append_line+" "+line);
                     }
                     else
-                        processed_qry.put(count, line);
+                        qrys.put(count, line);
                 }
             }
         }
         br.close();
-        System.out.println("Files parsed successfully");
-        return processed_qry;
+        System.out.println("Queries parsed");
+        return qrys;
     }
 
 }
