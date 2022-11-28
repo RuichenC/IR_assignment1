@@ -1,4 +1,4 @@
-package org.example;
+package lucene;
 
 import java.util.HashMap;
 
