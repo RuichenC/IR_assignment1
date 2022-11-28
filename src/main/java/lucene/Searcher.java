@@ -38,7 +38,7 @@ public class Searcher {
                 new String[] {"Title", "Author", "Bibliography", "Text"},
                 analyzer, score_booster);
 
-        File file = new File("src/result/cran.results");
+        File file = new File("src/cranfield/cran.results");
         PrintWriter writer = new PrintWriter(file, "UTF-8");
 
         for (Map.Entry<Integer, String> q : queries.entrySet()) {
