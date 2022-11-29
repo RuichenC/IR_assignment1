@@ -29,6 +29,7 @@ public class Searcher {
         IndexSearcher searcher = new IndexSearcher(reader);
         searcher.setSimilarity(new BM25Similarity());
         Analyzer analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+//        focus more on the titles and text
         HashMap<String, Float> score_booster = new HashMap<String, Float>();
         score_booster.put("Title", 0.65f);
         score_booster.put("Author", 0.04f);
@@ -54,7 +55,6 @@ public class Searcher {
 //                the doc id
                 int s = Integer.parseInt(docc.get("Id"));
                 writer.println((q.getKey()) + " Q0 " + s + " 0 " + sd.score + " STANDARD");
-//	        	System.out.println((q.getKey()) + " Q0 " + s + " 0 " + sd.score + " EXP");
             }
 
         }
