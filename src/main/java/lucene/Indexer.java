@@ -7,7 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.core.StopAnalyzer;
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.TextField;
@@ -15,6 +19,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.search.similarities.BM25Similarity;
+import org.apache.lucene.search.similarities.BooleanSimilarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -26,10 +31,15 @@ public class Indexer {
             System.out.println("Index will be saved to " + indexPath );
 
             Directory dir = FSDirectory.open(Paths.get(indexPath));
+//            Analyzer analyzer = new StopAnalyzer();
+//            Analyzer analyzer = new WhitespaceAnalyzer();
+//            Analyzer analyzer = new SimpleAnalyzer();
             Analyzer analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+//            Analyzer analyzer = new StandardAnalyzer();
             IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
             iwc.setOpenMode(OpenMode.CREATE);
             iwc.setSimilarity(new BM25Similarity());
+//            iwc.setSimilarity(new BooleanSimilarity());
             IndexWriter writer = new IndexWriter(dir, iwc);
             for (Map.Entry<Integer, HashMap<String, String>> entry : docSet.entrySet()) {
                 Document doc = new Document();

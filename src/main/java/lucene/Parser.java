@@ -9,22 +9,28 @@ public class Parser {
     public static HashMap<Integer, HashMap<String, String>> parse_docs() throws Exception{
         String line;
         String property = null;
-        BufferedReader br = new BufferedReader(new FileReader("src/cranfield/cran.all.1400"));
         int count=0;
+        BufferedReader br = new BufferedReader(new FileReader("src/cranfield/cran.all.1400"));
+
         HashMap<Integer, HashMap<String, String>> docs = new HashMap<Integer, HashMap<String, String>>();
         while((line = br.readLine())!=null) {
             String append_line;
+//            id
             if(line.startsWith(".I")) {
                 count++;
                 property=".I";
                 docs.put(count, new HashMap<String, String>());
             }
+//            author
             else if(line.startsWith(".A"))
                 property=".A";
+//            title
             else if(line.startsWith(".T"))
                 property=".T";
+//            bib
             else if(line.startsWith(".B"))
                 property=".B";
+//            textual document
             else if(line.startsWith(".W"))
                 property=".W";
             else {
